@@ -2,3 +2,9 @@ FROM debian:12
 RUN apt-get update
 RUN apt-get install -y python3 python3-pip
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+# Définir le répertoire de travail (on place notre point de travail à `/app` dans l’image.)
+WORKDIR /app
+# Copier le code de l’application dans l’image
+COPY app/ /app/
+# Install dependencies Python (Cela installe les packages Python requis dans l’image, de façon optimisée (sans cache pip inutile)
+RUN pip3 install --no-cache-dir --break-system-packages -r requirements.txt
